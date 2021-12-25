@@ -1,11 +1,11 @@
 class BlogsController < ApplicationController
-
-   def show
-      @blog = Blog.find(params[:id])
-   end
-
-   def index
+  def index
+    # 記事を全件取得
     @blogs = Blog.all
+  end
+
+  def show
+    @blog = Blog.find(params[:id])
   end
 
   def new
@@ -13,9 +13,12 @@ class BlogsController < ApplicationController
   end
 
   def create
-    blog = Blog.new(blog_params)
-    blog.save
-    redirect_to blog_path(blog.id)
+    @blog = Blog.new(blog_params)
+    if @blog.save
+      redirect_to blog_path(@blog.id)
+    else
+      render :new
+    end
   end
 
   def edit
